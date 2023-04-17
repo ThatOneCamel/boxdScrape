@@ -2,7 +2,8 @@ import urllib.request
 import re
 from requests_html import HTMLSession
 
-url = "https://letterboxd.com/crew/list/101-movies-that-missingmoviesorg-would-love/page/2/"
+#url = "https://letterboxd.com/tommypedersen/list/2016/"
+url = "https://letterboxd.com/tommypedersen/list/tommys-movie-collection/page/3/"
 
 session = HTMLSession()
 resp = session.get(url)

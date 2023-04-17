@@ -19,9 +19,10 @@ def getList():
 
 @app.route('/sample')
 def getSampleList():
-    return getPage("https://letterboxd.com/crew/list/101-movies-that-missingmoviesorg-would-love/page/2/")
+    return getPage("https://letterboxd.com/tommypedersen/list/tommys-movie-collection/page/3/")
 
-url = "https://letterboxd.com/crew/list/101-movies-that-missingmoviesorg-would-love/"
+#url = "https://letterboxd.com/tommypedersen/list/2016/"
+url = "https://letterboxd.com/tommypedersen/list/tommys-movie-collection/page/3/"
 
 session = HTMLSession()
 resp = session.get(url)
