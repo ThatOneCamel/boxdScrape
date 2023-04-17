@@ -1,18 +1,13 @@
-from flask import Flask
-from flask import request
+from flask import Flask, request, Response
+from flask_cors import CORS, cross_origin
 import urllib.request
 import re
 from requests_html import HTMLSession
+import os
 
 app = Flask(__name__)
-
-from flask import Flask
-from flask import request
-import urllib.request
-import re
-from requests_html import HTMLSession
-
-app = Flask(__name__)
+cors = CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
 
 #Makes all responses plaintext
 @app.after_request
@@ -28,6 +23,14 @@ def getList():
 @app.route('/sample')
 def getSampleList():
     return getPage("https://letterboxd.com/tommypedersen/list/tommys-movie-collection/page/3/")
+
+@app.route('/list', methods=['POST'])
+@cross_origin(origin='*',headers=['Content- Type','Authorization'])
+def getAList():
+    url = request.get_json(force=True).get('listurl')
+    print("Got it")
+    return Response(getPage(url), mimetype='text/plain')
+
 
 #url = "https://letterboxd.com/tommypedersen/list/2016/"
 url = "https://letterboxd.com/tommypedersen/list/tommys-movie-collection/page/3/"
@@ -58,7 +61,11 @@ def getPage(url):
         
     except Exception as e:
         print(e)
-        print("Failed to retrieve info from webpage")
-        return set()
+        print("Failed to retrieve info from webpage", url)
+        #return set()
+        return "{}"
 
 myStr = getPage(url)
+
+if __name__ == '__main__':
+    app.run(debug=True, port=os.getenv("PORT", default=5000))
